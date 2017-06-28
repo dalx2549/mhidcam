@@ -5,15 +5,25 @@ import org.javalite.activejdbc.Base;
 
 public class DBConnector {
 
-    public void openConnection(){
+    public void openConnection() throws Exception{
 
-        Base.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/mhidcam_db", "root", "");
+        Base.open("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/mhidcam_db?autoReconnect=true&useSSL=false", "root", "");
 
     }
 
     public void closeConnection(){
 
-        Base.close();
+        try{
+
+            Base.close();
+
+        }
+        catch (Exception e){
+
+            e.printStackTrace();
+
+        }
+
 
     }
 
