@@ -37,7 +37,11 @@
 
     <dependencies>
 
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.5</version>
+        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
@@ -49,6 +53,12 @@
             <groupId>org.javalite</groupId>
             <artifactId>activejdbc</artifactId>
             <version>1.4.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
         </dependency>
 
     </dependencies>
