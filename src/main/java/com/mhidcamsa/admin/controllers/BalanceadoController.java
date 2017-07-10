@@ -19,7 +19,6 @@ public class BalanceadoController {
 
     public static void insertBalanceado(Balanceado balanceado) {
 
-
         try {
 
             BasicDataSource bds = DataSource.getInstance().getBds();
@@ -37,6 +36,8 @@ public class BalanceadoController {
             pstm.setBigDecimal(6, balanceado.getPrecio());
             pstm.setBoolean(7, balanceado.isLiquido());
 
+            System.out.println(pstm.toString());
+
             pstm.execute();
 
             System.out.println("Data saved!");
@@ -45,10 +46,10 @@ public class BalanceadoController {
 
             e.printStackTrace();
 
-        } finally {
+        }
+        finally {
 
             try {
-
                 if (pstm != null) {
                     pstm.close();
                     System.out.println("Closing statement...");
@@ -58,17 +59,15 @@ public class BalanceadoController {
                     System.out.println("Closing connection...");
                 }
             } catch (SQLException e) {
-
                 e.printStackTrace();
-
             }
 
         }
 
     }
 
+    // Retrieves all Balanceado entries from DB
     public Object[][] getAllData() {
-
 
         int rows = 0;
         int cols = 0;
@@ -79,6 +78,7 @@ public class BalanceadoController {
             conn = bds.getConnection();
 
             pstm = conn.prepareStatement("SELECT count(1) as total FROM balanceado ");
+            System.out.println(pstm.toString());
             rs = pstm.executeQuery();
 
             rs.next();
@@ -86,36 +86,31 @@ public class BalanceadoController {
             rows = rs.getInt("total");
 
             if (rs != null){
-
                 rs.close();
-
             }
 
         }
         catch (SQLException e){
-
             e.printStackTrace();
-
         }
 
         try {
-
 
             pstm = conn.prepareStatement("SELECT " +
                     " * " +
                     " FROM balanceado");
 
+            System.out.println(pstm.toString());
+
             rs = pstm.executeQuery();
 
             cols = rs.getMetaData().getColumnCount();
-
 
         } catch (SQLException e) {
 
             e.printStackTrace();
 
         }
-
 
         Object[][] data = new String[rows][cols];
 
@@ -145,26 +140,27 @@ public class BalanceadoController {
             try {
 
                 if (rs != null) {
-
                     rs.close();
-
+                    System.out.println("Closing ResultSet...");
                 }
                 if (conn != null) {
-
                     conn.close();
-
+                    System.out.println("Closing connection...");
                 }
 
             } catch (SQLException e) {
-
                 e.printStackTrace();
-
             }
 
         }
 
-
         return data;
+
+    }
+
+    public static void updateBalanceado(){
+
+
 
     }
 

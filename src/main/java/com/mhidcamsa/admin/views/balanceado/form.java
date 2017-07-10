@@ -2,6 +2,8 @@ package com.mhidcamsa.admin.views.balanceado;
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.event.*;
@@ -27,8 +29,9 @@ public class form{
     private JButton btEliminar;
     private JTextField txtProt;
     private JTextField txtfVolumen;
+    private JLabel labelKg;
 
-
+    private int filaTabla;
 
     public form() {
 
@@ -53,6 +56,7 @@ public class form{
 
                 System.out.println("It works!");
 
+                updateTabla();
 
             }
         });
@@ -66,6 +70,42 @@ public class form{
 
             }
         });
+
+        líquidoCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (líquidoCheckBox.isSelected()){
+
+                    labelKg.setText("Litros");
+
+                }
+                else {
+
+                    labelKg.setText("Kg");
+
+                }
+
+            }
+        });
+
+
+        tableBalanceado.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                filaTabla = tableBalanceado.getSelectedRow();
+
+                if(filaTabla > -1){
+
+                    txtfMarca.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla,1)));
+                    txtfTipo.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla, 2)));
+
+                }
+
+            }
+        });
+
     }
 
 
@@ -80,6 +120,7 @@ public class form{
 
         dataBalanceado = balanceadoController.getAllData();
 
+        // Casts liquido column
         for (int i = 0; i < dataBalanceado.length; i++){
 
             dataBalanceado[i][3] = dataBalanceado[i][3] + "%";
