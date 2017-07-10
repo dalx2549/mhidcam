@@ -5,8 +5,7 @@ import java.util.UUID;
 
 public class Desinfectante extends Producto {
 
-    public Desinfectante(UUID id, String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
-        super(id, marca, tipo, precio, volumen, liquido);
+    public Desinfectante(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
+        super(marca, tipo, precio, volumen, liquido);
     }
-
 }

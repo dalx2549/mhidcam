@@ -5,15 +5,19 @@ import java.util.UUID;
 
 public abstract class Producto {
 
-    private UUID id;
+    private String id;
     private String marca;
     private String tipo;
     private BigDecimal precio;
     private double volumen;
     private boolean liquido;
 
-    public Producto(UUID id, String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
-        this.id = id;
+    public Producto(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
+
+        UUID uuid = UUID.randomUUID();
+        String uuidString = uuid.toString();
+
+        this.id = uuidString;
         this.marca = marca;
         this.tipo = tipo;
         this.precio = precio;
@@ -21,11 +25,11 @@ public abstract class Producto {
         this.liquido = liquido;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

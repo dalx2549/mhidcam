@@ -7,8 +7,8 @@ public class Balanceado extends Producto{
 
     private int perc_prot;
 
-    public Balanceado(UUID id, String marca, String tipo, BigDecimal precio, double volumen, boolean liquido, int perc_prot) {
-        super(id, marca, tipo, precio, volumen, liquido);
+    public Balanceado(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido, int perc_prot) {
+        super(marca, tipo, precio, volumen, liquido);
         this.perc_prot = perc_prot;
     }
 

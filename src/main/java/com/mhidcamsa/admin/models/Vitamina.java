@@ -6,9 +6,7 @@ import java.util.UUID;
 
 public class Vitamina extends Producto{
 
-    public Vitamina(UUID id, String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
-        super(id, marca, tipo, precio, volumen, liquido);
+    public Vitamina(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
+        super(marca, tipo, precio, volumen, liquido);
     }
-
-
 }
