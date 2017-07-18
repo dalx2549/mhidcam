@@ -1,8 +1,11 @@
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Vitamina.java
-/Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/config/DBConnectionPool.java
+/Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/views/balanceado/form.java
+/Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/config/DataSource.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/config/DBConnector.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Desinfectante.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Fertilizante.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Bacterias.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/test.java
+/Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/controllers/BalanceadoController.java
+/Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Producto.java
 /Users/dfmontano/NetBeansProjects/admin/src/main/java/com/mhidcamsa/admin/models/Balanceado.java

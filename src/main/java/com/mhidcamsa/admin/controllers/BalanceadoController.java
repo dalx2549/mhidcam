@@ -16,6 +16,23 @@ public class BalanceadoController {
     public static PreparedStatement pstm;
     public static ResultSet rs;
 
+    //Close DB connections
+    private static void closeConnections(){
+
+        try {
+            if (pstm != null) {
+                pstm.close();
+                System.out.println("Closing statement...");
+            }
+            if (conn != null) {
+                conn.close();
+                System.out.println("Closing connection...");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void insertBalanceado(Balanceado balanceado) {
 
@@ -49,18 +66,7 @@ public class BalanceadoController {
         }
         finally {
 
-            try {
-                if (pstm != null) {
-                    pstm.close();
-                    System.out.println("Closing statement...");
-                }
-                if (conn != null) {
-                    conn.close();
-                    System.out.println("Closing connection...");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeConnections();
 
         }
 
@@ -158,9 +164,78 @@ public class BalanceadoController {
 
     }
 
-    public static void updateBalanceado(){
+    public static void updateBalanceado(Balanceado balanceado){
 
+        BasicDataSource bds = DataSource.getInstance().getBds();
 
+        try {
+
+            conn = bds.getConnection();
+
+            pstm = conn.prepareStatement("UPDATE  balanceado " +
+            "set marca = ? ," +
+            "tipo = ? ," +
+            "perc_prot = ? ," +
+            "volumen = ? ," +
+            "precio = ? ," +
+            "liquido = ? " +
+            "WHERE idbalanceado = ? ");
+
+            pstm.setString(1, balanceado.getMarca());
+            pstm.setString(2, balanceado.getTipo());
+            pstm.setInt(3, balanceado.getPerc_prot());
+            pstm.setDouble(4, balanceado.getVolumen());
+            pstm.setBigDecimal(5, balanceado.getPrecio());
+            pstm.setBoolean(6, balanceado.isLiquido());
+            pstm.setString(7, balanceado.getId());
+
+            System.out.println(pstm.toString());
+
+            pstm.execute();
+
+            System.out.println("Entry updated");
+
+        }
+        catch (SQLException e){
+
+            e.printStackTrace();
+
+        }
+        finally {
+
+            closeConnections();
+
+        }
+
+    }
+
+    public static void deleteBalanceado(String id){
+
+        try{
+
+            BasicDataSource bds = DataSource.getInstance().getBds();
+            conn = bds.getConnection();
+
+            pstm = conn.prepareStatement("DELETE FROM balanceado WHERE idbalanceado = ?");
+            pstm.setString(1 ,id);
+
+            System.out.println(pstm.toString());
+
+            pstm.execute();
+
+            System.out.println("Entry deleted");
+
+        }
+        catch (SQLException e){
+
+            e.printStackTrace();
+
+        }
+        finally {
+
+            closeConnections();
+
+        }
 
     }
 

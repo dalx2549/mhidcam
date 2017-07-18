@@ -1,6 +1,5 @@
 package com.mhidcamsa.admin.views.balanceado;
 
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,9 +13,7 @@ import java.awt.event.WindowEvent;
 import com.mhidcamsa.admin.controllers.BalanceadoController;
 import com.mhidcamsa.admin.models.Balanceado;
 
-
-
-public class form{
+public class form {
 
     private JTextField txtfMarca;
     private JTextField txtfTipo;
@@ -30,13 +27,15 @@ public class form{
     private JTextField txtProt;
     private JTextField txtfVolumen;
     private JLabel labelKg;
+    private JLabel jLabelRequired;
+    private JButton btnLimpiar;
 
     private int filaTabla;
+    private String modId;
 
     public form() {
 
         updateTabla();
-
 
         btGuardar.addActionListener(new ActionListener() {
             @Override
@@ -49,7 +48,7 @@ public class form{
                 int prot = Integer.parseInt(txtProt.getText());
 
                 Balanceado balanceado = new Balanceado(txtfMarca.getText(), txtfTipo.getText(),
-                        precio, volumen, líquidoCheckBox.isSelected(), prot );
+                        precio, volumen, líquidoCheckBox.isSelected(), prot);
 
                 //Send field data to DB
                 BalanceadoController.insertBalanceado(balanceado);
@@ -66,7 +65,22 @@ public class form{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                BigDecimal precio = new BigDecimal(txtfPrecio.getText());
 
+                Balanceado balanceadoMod = new Balanceado(
+                        txtfMarca.getText(),
+                        txtfTipo.getText(),
+                        precio,
+                        Double.parseDouble(txtfVolumen.getText()),
+                        líquidoCheckBox.isSelected(),
+                        Integer.parseInt(txtProt.getText())
+                );
+
+                balanceadoMod.setId(modId);
+
+                BalanceadoController.updateBalanceado(balanceadoMod);
+
+                updateTabla();
 
             }
         });
@@ -75,12 +89,11 @@ public class form{
             @Override
             public void itemStateChanged(ItemEvent e) {
 
-                if (líquidoCheckBox.isSelected()){
+                if (líquidoCheckBox.isSelected()) {
 
                     labelKg.setText("Litros");
 
-                }
-                else {
+                } else {
 
                     labelKg.setText("Kg");
 
@@ -94,23 +107,104 @@ public class form{
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
-                filaTabla = tableBalanceado.getSelectedRow();
+                if (!e.getValueIsAdjusting()) {//This line prevents double events
 
-                if(filaTabla > -1){
+                    filaTabla = tableBalanceado.getSelectedRow();
 
-                    txtfMarca.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla,1)));
-                    txtfTipo.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla, 2)));
+                    if (filaTabla > -1) {
+
+                        txtfMarca.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla, 1)));
+                        txtfTipo.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla, 2)));
+
+                        String prot = String.valueOf(tableBalanceado.getValueAt(filaTabla, 3))
+                                .replace("%", "");
+
+                        txtProt.setText(prot);
+
+                        String vol = String.valueOf(tableBalanceado.getValueAt(filaTabla, 4));
+
+                        String aux = "";
+
+                        if (vol.contains(" l")) {
+
+                            aux = vol.replace(" l", "");
+
+                        } else if (vol.contains(" kg")) {
+
+                            aux = vol.replace(" kg", "");
+
+                        }
+
+                        txtfVolumen.setText(aux);
+
+                        txtfPrecio.setText(String.valueOf(tableBalanceado.getValueAt(filaTabla, 5)));
+
+                        Boolean bool = false;
+
+                        if (tableBalanceado.getValueAt(filaTabla, 6).equals("1")) {
+                            bool = true;
+                        } else if (tableBalanceado.getValueAt(filaTabla, 6).equals("0")) {
+                            bool = false;
+                        }
+
+                        líquidoCheckBox.setSelected(bool);
+
+                        modId = String.valueOf(tableBalanceado.getValueAt(filaTabla, 0));
+                        System.out.println(modId);
+
+                    }
 
                 }
 
             }
         });
 
+
+        btnLimpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                txtfMarca.setText("");
+                txtfPrecio.setText("");
+                txtfTipo.setText("");
+                txtfVolumen.setText("");
+                txtProt.setText("");
+                líquidoCheckBox.setSelected(false);
+
+            }
+        });
+
+        btEliminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (modId != null){
+
+                    int option = JOptionPane.showConfirmDialog(formContainer, "Realmente desea eliminar este registro?",
+                            "Confirmar Acción", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE);
+                    if (option == 0){
+
+                        BalanceadoController.deleteBalanceado(modId);
+                        updateTabla();
+
+                        txtfMarca.setText("");
+                        txtfPrecio.setText("");
+                        txtfTipo.setText("");
+                        txtfVolumen.setText("");
+                        txtProt.setText("");
+                        líquidoCheckBox.setSelected(false);
+
+                    }
+
+                }
+
+            }
+        });
     }
 
 
-
-    private void updateTabla(){
+    private void updateTabla() {
 
         String[] colNames = {"id", "Marca", "Tipo", "Proteína", "Volumen", "Precio", "lq"};
 
@@ -121,16 +215,15 @@ public class form{
         dataBalanceado = balanceadoController.getAllData();
 
         // Casts liquido column
-        for (int i = 0; i < dataBalanceado.length; i++){
+        for (int i = 0; i < dataBalanceado.length; i++) {
 
             dataBalanceado[i][3] = dataBalanceado[i][3] + "%";
 
-            if (dataBalanceado[i][6].equals("1")){
+            if (dataBalanceado[i][6].equals("1")) {
 
                 dataBalanceado[i][4] = dataBalanceado[i][4] + " l";
 
-            }
-            else if(dataBalanceado[i][6].equals("0")){
+            } else if (dataBalanceado[i][6].equals("0")) {
 
                 dataBalanceado[i][4] = dataBalanceado[i][4] + " kg";
 
@@ -152,9 +245,7 @@ public class form{
         lqHidden.setMinWidth(0);
         lqHidden.setMaxWidth(0);
 
-
     }
-
 
 
     public static void main(String[] args) {
@@ -208,7 +299,6 @@ public class form{
         });
 
     }
-
 
 
 }
