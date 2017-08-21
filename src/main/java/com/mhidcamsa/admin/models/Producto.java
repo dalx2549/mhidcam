@@ -11,8 +11,9 @@ public abstract class Producto {
     private BigDecimal precio;
     private double volumen;
     private boolean liquido;
+    private BigDecimal stockLibras;
 
-    public Producto(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido) {
+    public Producto(String marca, String tipo, BigDecimal precio, double volumen, boolean liquido, BigDecimal stockLibras) {
 
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
@@ -23,6 +24,8 @@ public abstract class Producto {
         this.precio = precio;
         this.volumen = volumen;
         this.liquido = liquido;
+        this.stockLibras = stockLibras;
+
     }
 
     public String getId() {
@@ -71,6 +74,14 @@ public abstract class Producto {
 
     public void setLiquido(boolean liquido) {
         this.liquido = liquido;
+    }
+
+    public BigDecimal getStockLibras() {
+        return stockLibras;
+    }
+
+    public void setStockLibras(BigDecimal stockLibras) {
+        this.stockLibras = stockLibras;
     }
 
     @Override

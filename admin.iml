@@ -10,6 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.github.lgooddatepicker:LGoodDatePicker:10.3.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.jiconfont:jiconfont-font_awesome:4.7.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.jiconfont:jiconfont:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.5" level="project" />

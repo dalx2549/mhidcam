@@ -1,4 +1,4 @@
-package com.mhidcamsa.admin.views.balanceado;
+package com.mhidcamsa.admin.views.productos;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -11,9 +11,10 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 
 import com.mhidcamsa.admin.controllers.BalanceadoController;
+import com.mhidcamsa.admin.controllers.ProductosController;
 import com.mhidcamsa.admin.models.Balanceado;
 
-public class form {
+public class Balanceados {
 
     private JTextField txtfMarca;
     private JTextField txtfTipo;
@@ -29,11 +30,12 @@ public class form {
     private JLabel labelKg;
     private JLabel jLabelRequired;
     private JButton btnLimpiar;
+    private JTextField txtfStock;
 
     private int filaTabla;
     private String modId;
 
-    public form() {
+    public Balanceados() {
 
         updateTabla();
 
@@ -47,8 +49,10 @@ public class form {
 
                 int prot = Integer.parseInt(txtProt.getText());
 
+                BigDecimal stock = new BigDecimal(txtfStock.getText());
+
                 Balanceado balanceado = new Balanceado(txtfMarca.getText(), txtfTipo.getText(),
-                        precio, volumen, líquidoCheckBox.isSelected(), prot);
+                        precio, volumen, líquidoCheckBox.isSelected(), prot, stock);
 
                 //Send field data to DB
                 BalanceadoController.insertBalanceado(balanceado);
@@ -66,6 +70,7 @@ public class form {
             public void actionPerformed(ActionEvent e) {
 
                 BigDecimal precio = new BigDecimal(txtfPrecio.getText());
+                BigDecimal stock = new BigDecimal(txtfStock.getText());
 
                 Balanceado balanceadoMod = new Balanceado(
                         txtfMarca.getText(),
@@ -73,7 +78,8 @@ public class form {
                         precio,
                         Double.parseDouble(txtfVolumen.getText()),
                         líquidoCheckBox.isSelected(),
-                        Integer.parseInt(txtProt.getText())
+                        Integer.parseInt(txtProt.getText()),
+                        stock
                 );
 
                 balanceadoMod.setId(modId);
@@ -164,12 +170,7 @@ public class form {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                txtfMarca.setText("");
-                txtfPrecio.setText("");
-                txtfTipo.setText("");
-                txtfVolumen.setText("");
-                txtProt.setText("");
-                líquidoCheckBox.setSelected(false);
+                clearFields();
 
             }
         });
@@ -185,15 +186,11 @@ public class form {
                             JOptionPane.INFORMATION_MESSAGE);
                     if (option == 0){
 
-                        BalanceadoController.deleteBalanceado(modId);
+                        ProductosController.deleteProducto(modId, "balanceado");
+
                         updateTabla();
 
-                        txtfMarca.setText("");
-                        txtfPrecio.setText("");
-                        txtfTipo.setText("");
-                        txtfVolumen.setText("");
-                        txtProt.setText("");
-                        líquidoCheckBox.setSelected(false);
+                        clearFields();
 
                     }
 
@@ -203,15 +200,28 @@ public class form {
         });
     }
 
+    // Clear all the form's text fields with empty strings
+    private void clearFields(){
+
+        txtfMarca.setText("");
+        txtfPrecio.setText("");
+        txtfTipo.setText("");
+        txtfVolumen.setText("");
+        txtProt.setText("");
+        txtfStock.setText("");
+        líquidoCheckBox.setSelected(false);
+
+    }
 
     private void updateTabla() {
 
-        String[] colNames = {"id", "Marca", "Tipo", "Proteína", "Volumen", "Precio", "lq"};
+        String[] colNames = {"id", "Marca", "Tipo", "Proteína", "Volumen", "Precio", "lq", "Stock"};
 
         BalanceadoController balanceadoController = new BalanceadoController();
 
         Object[][] dataBalanceado;
 
+        // Stores balanceado's ResultSet into a vector object
         dataBalanceado = balanceadoController.getAllData();
 
         // Casts liquido column
@@ -231,6 +241,7 @@ public class form {
 
         }
 
+        // Set table model with balanceado data and column names
         DefaultTableModel datos = new DefaultTableModel(dataBalanceado, colNames);
 
         tableBalanceado.setModel(datos);
@@ -250,7 +261,7 @@ public class form {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Balanceados");
-        frame.setContentPane(new form().formContainer);
+        frame.setContentPane(new Balanceados().formContainer);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

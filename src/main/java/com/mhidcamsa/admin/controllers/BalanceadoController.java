@@ -17,7 +17,7 @@ public class BalanceadoController {
     public static ResultSet rs;
 
     //Close DB connections
-    private static void closeConnections(){
+    private static void closeConnections() {
 
         try {
             if (pstm != null) {
@@ -42,8 +42,8 @@ public class BalanceadoController {
             conn = bds.getConnection();
 
             pstm = conn.prepareStatement("INSERT INTO" +
-                    " balanceado(idbalanceado, marca, tipo, perc_prot, volumen, precio, liquido) " +
-                    "VALUES(?,?,?,?,?,?,?)");
+                    " balanceado(idbalanceado, marca, tipo, perc_prot, volumen, precio, liquido, stock) " +
+                    "VALUES(?,?,?,?,?,?,?,?)");
 
             pstm.setString(1, balanceado.getId());
             pstm.setString(2, balanceado.getMarca());
@@ -52,6 +52,7 @@ public class BalanceadoController {
             pstm.setDouble(5, balanceado.getVolumen());
             pstm.setBigDecimal(6, balanceado.getPrecio());
             pstm.setBoolean(7, balanceado.isLiquido());
+            pstm.setBigDecimal(8, balanceado.getStockLibras());
 
             System.out.println(pstm.toString());
 
@@ -63,8 +64,7 @@ public class BalanceadoController {
 
             e.printStackTrace();
 
-        }
-        finally {
+        } finally {
 
             closeConnections();
 
@@ -78,7 +78,7 @@ public class BalanceadoController {
         int rows = 0;
         int cols = 0;
 
-        try{
+        try {
 
             BasicDataSource bds = DataSource.getInstance().getBds();
             conn = bds.getConnection();
@@ -91,12 +91,11 @@ public class BalanceadoController {
 
             rows = rs.getInt("total");
 
-            if (rs != null){
+            if (rs != null) {
                 rs.close();
             }
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -133,6 +132,7 @@ public class BalanceadoController {
                 data[i][4] = rs.getString("volumen");
                 data[i][5] = rs.getString("precio");
                 data[i][6] = rs.getString("liquido");
+                data[i][7] = rs.getString("stock");
 
                 i++;
             }
@@ -164,7 +164,7 @@ public class BalanceadoController {
 
     }
 
-    public static void updateBalanceado(Balanceado balanceado){
+    public static void updateBalanceado(Balanceado balanceado) {
 
         BasicDataSource bds = DataSource.getInstance().getBds();
 
@@ -173,13 +173,14 @@ public class BalanceadoController {
             conn = bds.getConnection();
 
             pstm = conn.prepareStatement("UPDATE  balanceado " +
-            "set marca = ? ," +
-            "tipo = ? ," +
-            "perc_prot = ? ," +
-            "volumen = ? ," +
-            "precio = ? ," +
-            "liquido = ? " +
-            "WHERE idbalanceado = ? ");
+                    "set marca = ? ," +
+                    "tipo = ? ," +
+                    "perc_prot = ? ," +
+                    "volumen = ? ," +
+                    "precio = ? ," +
+                    "liquido = ? ," +
+                    "stock = ? " +
+                    "WHERE idbalanceado = ? ");
 
             pstm.setString(1, balanceado.getMarca());
             pstm.setString(2, balanceado.getTipo());
@@ -187,7 +188,8 @@ public class BalanceadoController {
             pstm.setDouble(4, balanceado.getVolumen());
             pstm.setBigDecimal(5, balanceado.getPrecio());
             pstm.setBoolean(6, balanceado.isLiquido());
-            pstm.setString(7, balanceado.getId());
+            pstm.setBigDecimal(7, balanceado.getStockLibras());
+            pstm.setString(8, balanceado.getId());
 
             System.out.println(pstm.toString());
 
@@ -195,43 +197,11 @@ public class BalanceadoController {
 
             System.out.println("Entry updated");
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
 
             e.printStackTrace();
 
-        }
-        finally {
-
-            closeConnections();
-
-        }
-
-    }
-
-    public static void deleteBalanceado(String id){
-
-        try{
-
-            BasicDataSource bds = DataSource.getInstance().getBds();
-            conn = bds.getConnection();
-
-            pstm = conn.prepareStatement("DELETE FROM balanceado WHERE idbalanceado = ?");
-            pstm.setString(1 ,id);
-
-            System.out.println(pstm.toString());
-
-            pstm.execute();
-
-            System.out.println("Entry deleted");
-
-        }
-        catch (SQLException e){
-
-            e.printStackTrace();
-
-        }
-        finally {
+        } finally {
 
             closeConnections();
 
