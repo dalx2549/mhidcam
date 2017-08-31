@@ -1,4 +1,4 @@
-package com.mhidcamsa.admin.models;
+package com.mhidcamsa.admin.models.productos;
 
 import java.math.BigDecimal;
 import java.util.UUID;

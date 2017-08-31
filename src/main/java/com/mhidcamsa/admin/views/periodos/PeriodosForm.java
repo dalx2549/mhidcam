@@ -1,86 +1,166 @@
 package com.mhidcamsa.admin.views.periodos;
 
-import com.github.lgooddatepicker.components.DatePicker;
+import jiconfont.icons.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 import com.mhidcamsa.admin.controllers.BalanceadoController;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class PeriodosForm {
-    private JPanel Periodos;
-    private JTable table1;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
-    private JComboBox comboBox3;
-    private JComboBox comboBox4;
-    private JComboBox comboBox5;
-    private JTextField textField1;
-    private JTable tableBalanceados;
-    private JButton agregarButton;
 
+    static final BigDecimal LIBRAS = new BigDecimal(2.20);
+
+    private JPanel Periodos;
+    private JComboBox comboBoxBalanceado;
+    private JFormattedTextField formattedTextCantBalanceado;
+    private JComboBox comboBox1;
+    private JFormattedTextField formattedTextField2;
+    private JComboBox comboBox2;
+    private JFormattedTextField formattedTextField3;
+    private JComboBox comboBox3;
+    private JFormattedTextField formattedTextField4;
+    private JFormattedTextField formattedTextField5;
+    private JComboBox comboBox4;
+    private JButton buttonAgregarBalanceado;
+    private JFormattedTextField formattedTextField6;
+    private JTextArea textArea1;
+    private JButton buttonAgregarFertilizante;
+    private JButton buttonAgregarBacterias;
+    private JTable tableGastos;
+    private JButton buttonAgregarDesinfectante;
+    private JButton buttonAgregarVitamina;
+    private JLabel labelBalanceado;
+    private JTable tableBalanceados;
+
+    private BigDecimal subTotalBalanceado;
+    private String[] ids;
+    private BigDecimal[] precioUnit;
 
     public PeriodosForm() {
 
-        updateTablaBalanceado();
+        setButtonIcons();
 
-        agregarButton.addActionListener(new ActionListener() {
+        updateBalanceadoComboBox();
+
+        DefaultTableModel tableModel = new DefaultTableModel();
+        String[] columnNames = {"id","Producto", "Nombre / Tipo", "Cantidad", "Precio Unit.","Subtotal"};
+        for (int i = 0; i < columnNames.length; i++){
+
+            tableModel.addColumn(columnNames[i]);
+
+        }
+
+        tableGastos.setModel(tableModel);
+
+        subTotalBalanceado = new BigDecimal(0.00);
+
+/*        agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                System.out.println("====================================");
+                System.out.println(comboBoxBalanceado.getSelectedIndex());
+                System.out.println(ids[comboBoxBalanceado.getSelectedIndex()]);
+                System.out.println(comboBoxBalanceado.getSelectedItem());
+                System.out.println("====================================");
+            }
+        });*/
+
+        tableGastos.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
 
             }
         });
 
+        buttonAgregarBalanceado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                Object [] row = new Object[tableGastos.getColumnCount()];
+
+                row[0] = ids [comboBoxBalanceado.getSelectedIndex()];
+                row[1] = "Balanceado";
+                row[2] = comboBoxBalanceado.getSelectedItem();
+                row[3] = formattedTextCantBalanceado.getText();
+                row[4] = precioUnit[comboBoxBalanceado.getSelectedIndex()];
+                row[5] = precioUnit[comboBoxBalanceado.getSelectedIndex()].multiply(new BigDecimal(formattedTextCantBalanceado.getText()));
+
+                tableModel.addRow(row);
+
+                subTotalBalanceado = subTotalBalanceado.add(new BigDecimal(row[5].toString()));
+                labelBalanceado.setText(subTotalBalanceado.toString());
+
+            }
+        });
+    }
+
+    private void setButtonIcons(){
+
+        IconFontSwing.register(FontAwesome.getIconFont());
+
+        Icon agregarIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_SQUARE_O, 20);
+        buttonAgregarBalanceado.setIcon(agregarIcon);
+        buttonAgregarBacterias.setIcon(agregarIcon);
+        buttonAgregarFertilizante.setIcon(agregarIcon);
+        buttonAgregarDesinfectante.setIcon(agregarIcon);
+        buttonAgregarVitamina.setIcon(agregarIcon);
 
     }
 
-    private void updateTablaBalanceado(){
+    private void updateBalanceadoComboBox(){
 
-        String[] colNames = {"id","Marca", "Tipo", "Precio/Libra"};
+        Object [][] balanceados;
 
         BalanceadoController balanceadoController = new BalanceadoController();
 
-        Object[][] dataBal;
+        balanceados = balanceadoController.getAllData();
 
-        dataBal = balanceadoController.getAllData();
+        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
 
-        for (int i = 0; i < dataBal.length; i++){
+        String value;
 
-            BigDecimal precio = new BigDecimal(dataBal[i][5].toString());
-            double peso = Double.parseDouble(dataBal[i][4].toString());
+        ids = new String[balanceados.length];
+        precioUnit = new BigDecimal[balanceados.length];
 
-            BigDecimal pesoBig = new BigDecimal(peso);
+        BigDecimal precio;
+        BigDecimal volumen;
 
-            BigDecimal precioResult = precio.divide(pesoBig);
+        for (int i = 0; i < balanceados.length; i++){
 
-            precioResult = precioResult.setScale(2, RoundingMode.CEILING);
+            value = balanceados[i][1].toString() + " " + balanceados[i][2];
 
-            dataBal[i][3] = String.valueOf(precioResult);
+            ids[i] = balanceados[i][0].toString();
 
-            System.out.println(precioResult);
+            precio = new BigDecimal(balanceados[i][5].toString());
+            volumen = new BigDecimal(balanceados[i][4].toString());
+
+            precio = precio.divide(LIBRAS, 2, RoundingMode.HALF_UP);
+
+            precioUnit[i] = precio.divide(volumen, 2, RoundingMode.HALF_UP);
+
+            comboBoxModel.addElement(value);
+            System.out.println(ids[i]);
 
         }
 
-        DefaultTableModel datosBalanceado = new DefaultTableModel(dataBal, colNames);
-
-        tableBalanceados.setModel(datosBalanceado);
-
-        TableColumn idHidden = tableBalanceados.getColumn("id");
-        idHidden.setPreferredWidth(0);
-        idHidden.setMinWidth(0);
-        idHidden.setMaxWidth(0);
+        comboBoxBalanceado.setModel(comboBoxModel);
 
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("PeriodosForm");
+        JFrame frame = new JFrame("Periodos");
         frame.setContentPane(new PeriodosForm().Periodos);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.pack();
         frame.setVisible(true);
     }

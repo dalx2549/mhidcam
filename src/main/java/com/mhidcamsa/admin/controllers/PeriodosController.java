@@ -72,12 +72,20 @@ public class PeriodosController {
 
         try{
 
+            BasicDataSource bds = DataSource.getInstance().getBds();
+            conn = bds.getConnection();
+
+            pstm = conn.prepareStatement("");
+
+            System.out.println(pstm.toString());
+
+            pstm.execute();
 
 
         }
         catch (SQLException e){
 
-
+            e.printStackTrace();
 
         }
         finally {

@@ -2,7 +2,7 @@ package com.mhidcamsa.admin.controllers;
 
 import com.mhidcamsa.admin.config.DataSource;
 
-import com.mhidcamsa.admin.models.Fertilizante;
+import com.mhidcamsa.admin.models.productos.Fertilizante;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

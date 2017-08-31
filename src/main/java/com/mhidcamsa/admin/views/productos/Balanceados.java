@@ -3,6 +3,8 @@ package com.mhidcamsa.admin.views.productos;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.event.*;
@@ -12,7 +14,7 @@ import java.awt.event.WindowEvent;
 
 import com.mhidcamsa.admin.controllers.BalanceadoController;
 import com.mhidcamsa.admin.controllers.ProductosController;
-import com.mhidcamsa.admin.models.Balanceado;
+import com.mhidcamsa.admin.models.productos.Balanceado;
 
 public class Balanceados {
 
@@ -35,9 +37,11 @@ public class Balanceados {
     private int filaTabla;
     private String modId;
 
+
     public Balanceados() {
 
         updateTabla();
+
 
         btGuardar.addActionListener(new ActionListener() {
             @Override
@@ -262,7 +266,7 @@ public class Balanceados {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Balanceados");
         frame.setContentPane(new Balanceados().formContainer);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 

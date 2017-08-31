@@ -1,7 +1,7 @@
 package com.mhidcamsa.admin.controllers;
 
 import com.mhidcamsa.admin.config.DataSource;
-import com.mhidcamsa.admin.models.Balanceado;
+import com.mhidcamsa.admin.models.productos.Balanceado;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
