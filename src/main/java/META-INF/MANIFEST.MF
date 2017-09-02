@@ -1,3 +1,5 @@
 Manifest-Version: 1.0
+
 Main-Class: com.mhidcamsa.admin.views.periodos.PeriodosForm
+SplashScreen-Image: src/main/resources/img/logo.png
 

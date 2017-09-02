@@ -5,6 +5,8 @@ import jiconfont.swing.IconFontSwing;
 import com.mhidcamsa.admin.controllers.BalanceadoController;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -37,17 +39,26 @@ public class PeriodosForm {
     private JButton buttonAgregarDesinfectante;
     private JButton buttonAgregarVitamina;
     private JLabel labelBalanceado;
-    private JTable tableBalanceados;
+    private JButton guardarButton;
+    private JButton eliminarButton;
+    private JComboBox comboBox5;
+    private JFormattedTextField formattedTextField1;
+    private JButton buttonAgregarCombustible;
+    private JButton buttonAgregarGastoV;
+
 
     private BigDecimal subTotalBalanceado;
     private String[] ids;
     private BigDecimal[] precioUnit;
+    private int filaSeleccionada;
 
     public PeriodosForm() {
 
         setButtonIcons();
 
         updateBalanceadoComboBox();
+
+        eliminarButton.setEnabled(false);
 
         DefaultTableModel tableModel = new DefaultTableModel();
         String[] columnNames = {"id","Producto", "Nombre / Tipo", "Cantidad", "Precio Unit.","Subtotal"};
@@ -73,10 +84,43 @@ public class PeriodosForm {
             }
         });*/
 
-        tableGastos.getModel().addTableModelListener(new TableModelListener() {
+        tableGastos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void tableChanged(TableModelEvent e) {
+            public void valueChanged(ListSelectionEvent e) {
 
+                if (!e.getValueIsAdjusting()){
+
+                    filaSeleccionada = tableGastos.getSelectedRow();
+                    eliminarButton.setEnabled(true);
+
+                    if (tableModel.getRowCount() == 0){
+
+                        eliminarButton.setEnabled(false);
+
+                    }
+
+                }
+
+            }
+        });
+
+        eliminarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (filaSeleccionada > -1){
+
+                    if(tableModel.getValueAt(filaSeleccionada,1) == "Balanceado"){
+
+                        subTotalBalanceado = subTotalBalanceado.subtract(new BigDecimal(tableModel.getValueAt(filaSeleccionada, 5).toString()));
+
+                        labelBalanceado.setText(subTotalBalanceado.toString());
+
+                    }
+
+                    tableModel.removeRow(filaSeleccionada);
+
+                }
 
             }
         });
@@ -108,11 +152,19 @@ public class PeriodosForm {
         IconFontSwing.register(FontAwesome.getIconFont());
 
         Icon agregarIcon = IconFontSwing.buildIcon(FontAwesome.PLUS_SQUARE_O, 20);
+        Icon guardarIcon = IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 32);
+        Icon eliminarIcon = IconFontSwing.buildIcon(FontAwesome.TRASH_O, 20);
+
         buttonAgregarBalanceado.setIcon(agregarIcon);
         buttonAgregarBacterias.setIcon(agregarIcon);
         buttonAgregarFertilizante.setIcon(agregarIcon);
         buttonAgregarDesinfectante.setIcon(agregarIcon);
         buttonAgregarVitamina.setIcon(agregarIcon);
+        buttonAgregarCombustible.setIcon(agregarIcon);
+        buttonAgregarGastoV.setIcon(agregarIcon);
+
+        guardarButton.setIcon(guardarIcon);
+        eliminarButton.setIcon(eliminarIcon);
 
     }
 

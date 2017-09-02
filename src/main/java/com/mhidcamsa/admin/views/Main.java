@@ -1,6 +1,7 @@
 package com.mhidcamsa.admin.views;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,16 +34,38 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
 
         JFrame frame = new JFrame("Main");
+
+        //Splash s = new Splash();
+
+        //Thread t = Thread.currentThread();
+
+        //s.setVisible(true);
+        //t.sleep(5000);
+
 
         frame.setContentPane(new Main().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.pack();
-        frame.setVisible(true);
+
+        //s.dispose();
+
+        //SwingUtilities.invokeLater(new Runnable() {
+          //  @Override
+            //public void run() {
+
+
+
+                frame.setVisible(true);
+
+
+        //   }
+        //});
+
+
 
     }
 }

@@ -9,11 +9,10 @@ public class Periodo {
     private String id;
     private Date fechaInicio;
     private Date fechaFin;
-    private BigDecimal totalBalanceado;
     private BigDecimal totalCosto;
     private String corrida;
 
-    public Periodo(Date fechaInicio, Date fechaFin, BigDecimal totalBalanceado, BigDecimal totalCosto, String corrida) {
+    public Periodo(Date fechaInicio, Date fechaFin, BigDecimal totalCosto, String corrida) {
 
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
@@ -21,7 +20,6 @@ public class Periodo {
         this.id = uuidString;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.totalBalanceado = totalBalanceado;
         this.totalCosto = totalCosto;
         this.corrida = corrida;
 
@@ -49,14 +47,6 @@ public class Periodo {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-
-    public BigDecimal getTotalBalanceado() {
-        return totalBalanceado;
-    }
-
-    public void setTotalBalanceado(BigDecimal totalBalanceado) {
-        this.totalBalanceado = totalBalanceado;
     }
 
     public BigDecimal getTotalCosto() {

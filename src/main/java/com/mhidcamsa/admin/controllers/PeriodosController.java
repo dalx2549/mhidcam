@@ -40,15 +40,14 @@ public class PeriodosController {
             conn = bds.getConnection();
 
             pstm = conn.prepareStatement("INSERT INTO "
-                    + " periodos(idperiodos, fecha_inicio, fecha_fin, total_balanceado, total_costo, corrida) "
+                    + " periodos(idperiodos, fecha_inicio, fecha_fin, total_costo, corrida) "
                     + "VALUES (?,?,?,?,?,?)");
 
             pstm.setString(1, periodo.getId());
             pstm.setDate(2, periodo.getFechaInicio());
             pstm.setDate(3, periodo.getFechaFin());
-            pstm.setBigDecimal(4, periodo.getTotalBalanceado());
-            pstm.setBigDecimal(5, periodo.getTotalCosto());
-            pstm.setString(6, periodo.getCorrida());
+            pstm.setBigDecimal(4, periodo.getTotalCosto());
+            pstm.setString(5, periodo.getCorrida());
 
             System.out.println(pstm.toString());
 
