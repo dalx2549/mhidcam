@@ -79,19 +79,19 @@ public class CorridasController {
         connection = bds.getConnection();
 
         pstm = connection.prepareStatement("SELECT COUNT(1) as total FROM corridas ");
-        pstm.toString();
+        System.out.println(pstm.toString());
 
         resultSet = pstm.executeQuery();
         resultSet.next();
 
         total = resultSet.getInt("total");
 
-        releaseConnections();
 
         return total;
     }
 
-    public Object[][] getCorridas() throws SQLException {
+    public Object[][] getCorridas(String piscina) throws SQLException {
+
 
         int rows = 0;
         int cols = 0;
@@ -100,7 +100,9 @@ public class CorridasController {
 
         System.out.println("Total: " + rows);
 
-        pstm = connection.prepareStatement("SELECT * FROM corridas");
+        pstm = connection.prepareStatement("SELECT * FROM corridas " + "WHERE piscina_id = " + piscina);
+
+        System.out.println(pstm.toString());
 
         resultSet = pstm.executeQuery();
 
@@ -114,10 +116,26 @@ public class CorridasController {
 
             data[i][0] = resultSet.getString("idcorridas");
             data[i][1] = resultSet.getString("fecha_inicio");
-            data[i][2] = resultSet.getString("estado");
-            data[i][3] = resultSet.getString("piscina_id");
+            data[i][2] = resultSet.getString("fecha_fin");
+            data[i][3] = resultSet.getString("estado");
+            data[i][4] = resultSet.getString("piscina_id");
 
             i++;
+        }
+
+        for (int j = 0; j < data.length; j++){
+
+            if (data[j][3].equals("1")){
+
+                data[j][3] = "Activa";
+
+            }
+            else if (data[j][3].equals("0")){
+
+                data[j][3] = "Inactiva";
+
+            }
+
         }
 
         releaseConnections();

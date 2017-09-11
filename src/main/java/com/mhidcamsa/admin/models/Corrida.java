@@ -11,14 +11,13 @@ public class Corrida {
     private Boolean activa;
     private String id_piscina;
 
-    public Corrida(Date fecha_inicio, Date fecha_fin, Boolean activa, String id_piscina) {
+    public Corrida(Date fecha_inicio, Boolean activa, String id_piscina) {
 
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
 
         this.id = uuidString;
         this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
         this.activa = activa;
         this.id_piscina = id_piscina;
 

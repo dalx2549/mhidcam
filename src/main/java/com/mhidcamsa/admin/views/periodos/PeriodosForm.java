@@ -1,5 +1,6 @@
 package com.mhidcamsa.admin.views.periodos;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 import com.mhidcamsa.admin.controllers.BalanceadoController;
@@ -25,8 +26,7 @@ public class PeriodosForm {
     private JComboBox comboBox3;
     private JComboBox comboBox4;
     private JButton buttonAgregarBalanceado;
-    private JFormattedTextField formattedTextField6;
-    private JTextArea textArea1;
+    private JTextArea textGastos;
     private JButton buttonAgregarFertilizante;
     private JButton buttonAgregarBacterias;
     private JTable tableGastos;
@@ -44,6 +44,9 @@ public class PeriodosForm {
     private JSpinner spinnerFertilizante;
     private JSpinner spinnerBacterias;
     private JSpinner spinnerVitamina;
+    private DatePicker fechaInicioPicker;
+    private DatePicker fechaFinPicker;
+    private JSpinner spinner1;
 
 
     private BigDecimal subTotalBalanceado;
