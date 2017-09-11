@@ -16,14 +16,14 @@ import com.mhidcamsa.admin.controllers.BalanceadoController;
 import com.mhidcamsa.admin.controllers.ProductosController;
 import com.mhidcamsa.admin.models.productos.Balanceado;
 
-public class Balanceados {
+public class Balanceados extends JFrame{
 
     private JTextField txtfMarca;
     private JTextField txtfTipo;
     private JTextField txtfPrecio;
     private JCheckBox líquidoCheckBox;
     private JTable tableBalanceado;
-    private JPanel formContainer;
+    public JPanel formContainer;
     private JButton btGuardar;
     private JButton btModificar;
     private JButton btEliminar;
@@ -38,7 +38,9 @@ public class Balanceados {
     private String modId;
 
 
-    public Balanceados() {
+    public Balanceados(String prueba) {
+
+        System.out.println(prueba);
 
         updateTabla();
 
@@ -264,8 +266,10 @@ public class Balanceados {
 
 
     public static void main(String[] args) {
+
+
         JFrame frame = new JFrame("Balanceados");
-        frame.setContentPane(new Balanceados().formContainer);
+        frame.setContentPane(new Balanceados("Funciona").formContainer);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -159,6 +159,37 @@ public class ProductosController {
 
     }
 
+    public BigDecimal getStock(String tipo, String id, BigDecimal cantidad){
+
+        BigDecimal stock = new BigDecimal(0);
+        String idTipo = "id" + tipo;
+
+        try {
+
+            BasicDataSource bds = DataSource.getInstance().getBds();
+            connection = bds.getConnection();
+
+            pstm = connection.prepareStatement("SELECT stock FROM " + tipo + " WHERE " + idTipo + " = ? ");
+            rs = pstm.executeQuery();
+
+            stock = rs.getBigDecimal("stock");
+
+
+        }
+        catch (SQLException e){
+
+            e.printStackTrace();
+
+        }
+        finally {
+
+            releaseConnections();
+
+        }
+
+        return stock;
+    }
+
     public static void takeOffStock(String tipo, String id, BigDecimal cantidad ){
 
         BigDecimal stockActual;
@@ -200,7 +231,6 @@ public class ProductosController {
 
                 }
 
-
         }
         catch (SQLException e){
 
@@ -212,7 +242,6 @@ public class ProductosController {
             releaseConnections();
 
         }
-
 
     }
 

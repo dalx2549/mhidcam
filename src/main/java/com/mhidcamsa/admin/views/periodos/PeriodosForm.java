@@ -7,8 +7,6 @@ import com.mhidcamsa.admin.controllers.BalanceadoController;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,14 +19,10 @@ public class PeriodosForm {
 
     private JPanel Periodos;
     private JComboBox comboBoxBalanceado;
-    private JFormattedTextField formattedTextCantBalanceado;
+    private JFormattedTextField fTextCantBalanceado;
     private JComboBox comboBox1;
-    private JFormattedTextField formattedTextField2;
     private JComboBox comboBox2;
-    private JFormattedTextField formattedTextField3;
     private JComboBox comboBox3;
-    private JFormattedTextField formattedTextField4;
-    private JFormattedTextField formattedTextField5;
     private JComboBox comboBox4;
     private JButton buttonAgregarBalanceado;
     private JFormattedTextField formattedTextField6;
@@ -42,9 +36,14 @@ public class PeriodosForm {
     private JButton guardarButton;
     private JButton eliminarButton;
     private JComboBox comboBox5;
-    private JFormattedTextField formattedTextField1;
     private JButton buttonAgregarCombustible;
     private JButton buttonAgregarGastoV;
+    private JSpinner spinnerCombustible;
+    private JSpinner spinnerBalanceado;
+    private JSpinner spinnerDesinfectante;
+    private JSpinner spinnerFertilizante;
+    private JSpinner spinnerBacterias;
+    private JSpinner spinnerVitamina;
 
 
     private BigDecimal subTotalBalanceado;
@@ -54,6 +53,7 @@ public class PeriodosForm {
 
     public PeriodosForm() {
 
+        setSpinnerModels();
         setButtonIcons();
 
         updateBalanceadoComboBox();
@@ -61,8 +61,8 @@ public class PeriodosForm {
         eliminarButton.setEnabled(false);
 
         DefaultTableModel tableModel = new DefaultTableModel();
-        String[] columnNames = {"id","Producto", "Nombre / Tipo", "Cantidad", "Precio Unit.","Subtotal"};
-        for (int i = 0; i < columnNames.length; i++){
+        String[] columnNames = {"id", "Producto", "Nombre / Tipo", "Cantidad", "Precio Unit.", "Subtotal"};
+        for (int i = 0; i < columnNames.length; i++) {
 
             tableModel.addColumn(columnNames[i]);
 
@@ -88,12 +88,12 @@ public class PeriodosForm {
             @Override
             public void valueChanged(ListSelectionEvent e) {
 
-                if (!e.getValueIsAdjusting()){
+                if (!e.getValueIsAdjusting()) {
 
                     filaSeleccionada = tableGastos.getSelectedRow();
                     eliminarButton.setEnabled(true);
 
-                    if (tableModel.getRowCount() == 0){
+                    if (tableModel.getRowCount() == 0) {
 
                         eliminarButton.setEnabled(false);
 
@@ -108,9 +108,9 @@ public class PeriodosForm {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (filaSeleccionada > -1){
+                if (filaSeleccionada > -1) {
 
-                    if(tableModel.getValueAt(filaSeleccionada,1) == "Balanceado"){
+                    if (tableModel.getValueAt(filaSeleccionada, 1) == "Balanceado") {
 
                         subTotalBalanceado = subTotalBalanceado.subtract(new BigDecimal(tableModel.getValueAt(filaSeleccionada, 5).toString()));
 
@@ -129,25 +129,56 @@ public class PeriodosForm {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Object [] row = new Object[tableGastos.getColumnCount()];
+                Object[] row = new Object[tableGastos.getColumnCount()];
 
-                row[0] = ids [comboBoxBalanceado.getSelectedIndex()];
+                row[0] = ids[comboBoxBalanceado.getSelectedIndex()];
                 row[1] = "Balanceado";
                 row[2] = comboBoxBalanceado.getSelectedItem();
-                row[3] = formattedTextCantBalanceado.getText();
+                row[3] = spinnerBalanceado.getValue().toString();
+
+                System.out.println(row[3]);
+
+
                 row[4] = precioUnit[comboBoxBalanceado.getSelectedIndex()];
-                row[5] = precioUnit[comboBoxBalanceado.getSelectedIndex()].multiply(new BigDecimal(formattedTextCantBalanceado.getText()));
+                row[5] = precioUnit[comboBoxBalanceado.getSelectedIndex()].multiply(new BigDecimal(spinnerBalanceado.getValue().toString()));
 
                 tableModel.addRow(row);
 
                 subTotalBalanceado = subTotalBalanceado.add(new BigDecimal(row[5].toString()));
                 labelBalanceado.setText(subTotalBalanceado.toString());
 
+
+            }
+        });
+        buttonAgregarCombustible.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println(spinnerCombustible.getValue());
+
             }
         });
     }
 
-    private void setButtonIcons(){
+    private void setSpinnerModels(){
+
+        SpinnerNumberModel spinnerNumberModelBalanceado = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+        SpinnerNumberModel spinnerNumberModelDesinfectante = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+        SpinnerNumberModel spinnerNumberModelFertilizante = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+        SpinnerNumberModel spinnerNumberModelCombustible = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+        SpinnerNumberModel spinnerNumberModelVitamina = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+        SpinnerNumberModel spinnerNumberModelBacterias = new SpinnerNumberModel(1.00,00.00,500.00,0.5);
+
+        spinnerBalanceado.setModel(spinnerNumberModelBalanceado);
+        spinnerDesinfectante.setModel(spinnerNumberModelDesinfectante);
+        spinnerFertilizante.setModel(spinnerNumberModelFertilizante);
+        spinnerCombustible.setModel(spinnerNumberModelCombustible);
+        spinnerVitamina.setModel(spinnerNumberModelVitamina);
+        spinnerBacterias.setModel(spinnerNumberModelBacterias);
+
+    }
+
+    private void setButtonIcons() {
 
         IconFontSwing.register(FontAwesome.getIconFont());
 
@@ -168,9 +199,9 @@ public class PeriodosForm {
 
     }
 
-    private void updateBalanceadoComboBox(){
+    private void updateBalanceadoComboBox() {
 
-        Object [][] balanceados;
+        Object[][] balanceados;
 
         BalanceadoController balanceadoController = new BalanceadoController();
 
@@ -186,7 +217,7 @@ public class PeriodosForm {
         BigDecimal precio;
         BigDecimal volumen;
 
-        for (int i = 0; i < balanceados.length; i++){
+        for (int i = 0; i < balanceados.length; i++) {
 
             value = balanceados[i][1].toString() + " " + balanceados[i][2];
 
@@ -206,6 +237,7 @@ public class PeriodosForm {
 
         comboBoxBalanceado.setModel(comboBoxModel);
 
+
     }
 
     public static void main(String[] args) {
@@ -216,4 +248,21 @@ public class PeriodosForm {
         frame.pack();
         frame.setVisible(true);
     }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+/*
+
+            DecimalFormat decimalFormat = new DecimalFormat("####.##");
+
+
+            NumberFormatter numberFormatter = new NumberFormatter(decimalFormat);
+
+
+            fTextCantBalanceado = new JFormattedTextField(numberFormatter);*/
+
+
+    }
+
+
 }

@@ -115,14 +115,6 @@
                   <text value="Cantidad:"/>
                 </properties>
               </component>
-              <component id="d1468" class="javax.swing.JFormattedTextField" binding="formattedTextCantBalanceado">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="7bb49" class="javax.swing.JButton" binding="buttonAgregarBalanceado">
                 <constraints>
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -133,6 +125,12 @@
                   <text value=""/>
                   <toolTipText value="Agregar"/>
                 </properties>
+              </component>
+              <component id="e9517" class="javax.swing.JSpinner" binding="spinnerBalanceado">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -158,14 +156,6 @@
                   <text value="Cantidad:"/>
                 </properties>
               </component>
-              <component id="32ae6" class="javax.swing.JFormattedTextField" binding="formattedTextField3" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="c903" class="javax.swing.JButton" binding="buttonAgregarBacterias">
                 <constraints>
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -175,6 +165,12 @@
                 <properties>
                   <text value=""/>
                 </properties>
+              </component>
+              <component id="bbf01" class="javax.swing.JSpinner" binding="spinnerBacterias">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -200,14 +196,6 @@
                   <text value="Cantidad:"/>
                 </properties>
               </component>
-              <component id="ec7c1" class="javax.swing.JFormattedTextField" binding="formattedTextField2" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="cbe61" class="javax.swing.JButton" binding="buttonAgregarFertilizante">
                 <constraints>
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -217,6 +205,12 @@
                 <properties>
                   <text value=""/>
                 </properties>
+              </component>
+              <component id="86b21" class="javax.swing.JSpinner" binding="spinnerFertilizante">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -242,14 +236,6 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="5acc6" class="javax.swing.JFormattedTextField" binding="formattedTextField4" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="2b79c" class="javax.swing.JButton" binding="buttonAgregarDesinfectante">
                 <constraints>
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -259,6 +245,12 @@
                 <properties>
                   <text value=""/>
                 </properties>
+              </component>
+              <component id="15420" class="javax.swing.JSpinner" binding="spinnerDesinfectante">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -278,14 +270,6 @@
                   <text value="Cantidad:"/>
                 </properties>
               </component>
-              <component id="7c0b4" class="javax.swing.JFormattedTextField" binding="formattedTextField5" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="19f04" class="javax.swing.JComboBox" binding="comboBox4" default-binding="true">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
@@ -301,6 +285,12 @@
                 <properties>
                   <text value=""/>
                 </properties>
+              </component>
+              <component id="36dcf" class="javax.swing.JSpinner" binding="spinnerVitamina">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -326,14 +316,6 @@
                   <text value="Cantidad:"/>
                 </properties>
               </component>
-              <component id="36917" class="javax.swing.JFormattedTextField" binding="formattedTextField1" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
               <component id="b4c69" class="javax.swing.JButton" binding="buttonAgregarCombustible">
                 <constraints>
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -343,6 +325,12 @@
                 <properties>
                   <text value=""/>
                 </properties>
+              </component>
+              <component id="21e70" class="javax.swing.JSpinner" binding="spinnerCombustible">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
               </component>
             </children>
           </grid>
@@ -387,7 +375,9 @@
                 <children>
                   <component id="6ccc5" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <text value=""/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

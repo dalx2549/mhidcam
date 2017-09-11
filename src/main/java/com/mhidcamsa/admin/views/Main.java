@@ -18,6 +18,15 @@ public class Main {
     private JButton combustiblesButton;
     private JButton desinfectantesButton;
     private JButton vitaminasButton;
+    private JButton button2;
+    private JButton button1;
+    private JButton button3;
+    private JButton button4;
+    private JButton button5;
+    private JButton button6;
+    private JButton button7;
+    private JButton button8;
+    private JButton button9;
 
 
     public Main(){
@@ -27,7 +36,11 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Balanceados.main(null);
+                Balanceados balanceados = new Balanceados("Funciona");
+                balanceados.setContentPane(balanceados.formContainer);
+                balanceados.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                balanceados.pack();
+                balanceados.setVisible(true);
 
             }
         });
